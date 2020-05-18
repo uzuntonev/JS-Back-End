@@ -4,7 +4,7 @@ function createToke(data) {
   return jwt.sign(
     data,
     secret,
-    { expiresIn: '20m' }
+    { expiresIn: '2h' }
   );
 }
 

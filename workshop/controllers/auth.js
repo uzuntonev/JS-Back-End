@@ -11,18 +11,18 @@ function loginPost(req, res) {
   userModel
     .findOne({ username })
     .then((user) => {
-      return Promise.all([user, user.passwordMatch(password)]);
+      return Promise.all([user, user ? user.passwordMatch(password) : null]);
     })
     .then(([user, match]) => {
-      if (!match) {
-        res.redirect('login', {
+      if (!user || !match) {
+        res.render('login', {
           errors: { message: 'Password or username don`t match' },
         });
         return;
       }
       const token = utils.createToke({ id: user._id });
       res.cookie(config.cookieName, token).redirect('/');
-    });
+    })
 }
 
 function register(req, res) {

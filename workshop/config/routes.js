@@ -5,6 +5,10 @@ const {
   getCreate,
   postCreate,
   notFound,
+  getDeleteCube,
+  postDeleteCube,
+  getEditCube,
+  postEditCube,
 } = require('../controllers/cube');
 
 const {
@@ -23,10 +27,11 @@ const {
 } = require('../controllers/auth');
 
 const auth = require('../middlewares/auth');
+
 module.exports = (app) => {
-  app.get('/', home);
-  app.get('/about', about);
-  app.get('/create', auth(), getCreate).post('/create', postCreate);
+  app.get('/', auth(false), home);
+  app.get('/about', auth(false), about);
+  app.get('/create', auth(), getCreate).post('/create', auth(), postCreate);
   app.get('/details/:id', auth(), details);
   app
     .get('/create/accessory', auth(), accessoryGetCreate)
@@ -37,5 +42,11 @@ module.exports = (app) => {
   app.get('/login', login).post('/login', loginPost);
   app.get('/register', register).post('/register', registerPost);
   app.get('/logout', logout);
+  app
+    .get('/delete/:id', auth(), getDeleteCube)
+    .post('/delete/:id', auth(), postDeleteCube);
+  app
+    .get('/edit/:id', auth(), getEditCube)
+    .post('/edit/:id', auth(), postEditCube);
   app.get('*', notFound);
 };

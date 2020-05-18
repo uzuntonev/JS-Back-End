@@ -1,7 +1,8 @@
 const { accessoryModel, cubeModel } = require('../models');
 
 function accessoryGetCreate(req, res) {
-  res.render('createAccessory');
+  const user = req.user || null;
+  res.render('createAccessory', { user });
 }
 
 function accessoryPostCreate(req, res) {
@@ -17,6 +18,7 @@ function accessoryPostCreate(req, res) {
 }
 
 function accessoryGetAttach(req, res, next) {
+  const user = req.user || null;
   const { id: cubeId } = req.params;
   cubeModel
     .findById(cubeId)
@@ -27,16 +29,16 @@ function accessoryGetAttach(req, res, next) {
       ]);
     })
     .then(([cube, accessories]) => {
-      res.render('attachAccessory', { cube, accessories });
+      res.render('attachAccessory', { cube, accessories, user });
     })
     .catch(next);
 }
 
 function accessoryPostAttach(req, res, next) {
-  const { accessory } = req.body;
+  const { accessory: accessoryId } = req.body;
   const { id: cubeId } = req.params;
   Promise.all([
-    cubeModel.update({ _id: cubeId }, { $push: { accessories: accessory } }),
+    cubeModel.update({ _id: cubeId }, { $push: { accessories: accessoryId } }),
     accessoryModel.update({ _id: accessory }, { $push: { cubes: cubeId } }),
   ])
     .then(() => {

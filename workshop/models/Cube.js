@@ -4,7 +4,7 @@ const { String, ObjectId } = mongoose.Schema.Types;
 const cubeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
@@ -12,20 +12,20 @@ const cubeSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 200,
   },
-  imageUrl:{
+  imageUrl: {
     type: String,
     required: true,
     validate: {
       validator: (v) => v.startsWith('http'),
-      message: 'imageUrl must be valid link'
-    }
+      message: 'imageUrl must be valid link',
+    },
   },
   difficultyLevel: {
     type: String,
-    required: true
+    required: true,
   },
-  accessories: [{ type: ObjectId, ref: 'Accessory' }]
-
+  accessories: [{ type: ObjectId, ref: 'Accessory' }],
+  creatorId: { type: ObjectId, ref: 'User' },
 });
 
 module.exports = mongoose.model('Cube', cubeSchema);
