@@ -1,16 +1,3 @@
-// const { MongoClient } = require('mongodb');
-// const client = new MongoClient('mongodb://localhost:27017');
-// client.connect(function (err, client) {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   const db = client.db('exam');
-//   const collection = db.collection('users');
-
-//  collection.findOne().then(x => console.log(x));
-// });
-
 const app = require('express')();
 const { port } = require('./config/config');
 const dbConnection = require('./config/db');
@@ -27,3 +14,22 @@ dbConnection()
     );
   })
   .catch((err) => console.error(err));
+
+
+
+
+
+
+  // const { MongoClient } = require('mongodb');
+// const client = new MongoClient('mongodb://localhost:27017');
+// client.connect(function (err, client) {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   const db = client.db('exam');
+//   const collection = db.collection('users');
+
+//  collection.findOne().then(x => console.log(x));
+// });
+
