@@ -5,16 +5,28 @@ function accessoryGetCreate(req, res) {
   res.render('createAccessory', { user });
 }
 
-function accessoryPostCreate(req, res) {
+function accessoryPostCreate(req, res, next) {
   const newAccessory = req.body;
   if (!newAccessory.name || !newAccessory.imageUrl) {
-    res.redirect('create');
+    req.flash('error_msg', 'Name or image url are not valid.');
+    res.redirect('/create/accessory');
     return;
   }
 
-  accessoryModel.insertMany(newAccessory).then(() => {
-    res.redirect('/');
-  });
+  accessoryModel
+    .insertMany(newAccessory)
+    .then(() => {
+      req.flash('success_msg', 'You are creat accessory successfully');
+      res.redirect('/');
+    })
+    .catch((err) => {
+      if (err.errors.imageUrl) {
+        req.flash('error_msg', 'Image url must be valid link.');
+        res.redirect('/create/accessory');
+        return;
+      }
+      next(err);
+    });
 }
 
 function accessoryGetAttach(req, res, next) {
@@ -39,9 +51,10 @@ function accessoryPostAttach(req, res, next) {
   const { id: cubeId } = req.params;
   Promise.all([
     cubeModel.update({ _id: cubeId }, { $push: { accessories: accessoryId } }),
-    accessoryModel.update({ _id: accessory }, { $push: { cubes: cubeId } }),
+    accessoryModel.update({ _id: accessoryId }, { $push: { cubes: cubeId } }),
   ])
     .then(() => {
+      req.flash('success_msg', 'You are attach accessory successfully');
       res.redirect('/');
     })
     .catch(next);

@@ -39,7 +39,9 @@ module.exports = (app) => {
   // Body parser setup
   app.use(express.urlencoded({ extended: false }));
 
+  // Static files setup
   app.use(express.static(path.resolve('static')));
 
+  //Cookie Parser setup
   app.use(cookieParser());
 };

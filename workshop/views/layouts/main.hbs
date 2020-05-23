@@ -19,8 +19,12 @@
     <link rel='shortcut icon' type='image/x-icon' href='/images/favicon.png' />
     <script defer async>
         setTimeout(() => {
-            document.querySelector('div.alert').style.display = 'none'
+            const el = document.querySelector('div.alert');
+            if (el) {
+                el.style.display = 'none'
+            }
         }, 3000)
+
     </script>
 </head>
 

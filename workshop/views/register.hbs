@@ -1,6 +1,10 @@
 <h1>Register Form</h1>
 
-{{> message error_msg = 'errorr'}}
+{{!-- 
+{{#> message error_msg=errors.message}}
+{{/message}} --}}
+
+{{> message }}
 
 <div class="form">
   <form action="/register" method="POST">

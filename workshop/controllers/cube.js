@@ -46,6 +46,7 @@ function getCreate(req, res) {
 function postCreate(req, res, next) {
   const newCube = req.body;
   if (!newCube.name || !newCube.imageUrl) {
+    req.flash('error_msg', 'Enter valid name and image url.');
     res.redirect('create');
     return;
   }
@@ -53,6 +54,7 @@ function postCreate(req, res, next) {
   cubeModel
     .insertMany(newCube)
     .then(() => {
+      req.flash('success_msg', 'You are create cube successfully');
       res.redirect('/');
     })
     .catch(next);
@@ -91,6 +93,7 @@ function postDeleteCube(req, res, next) {
   cubeModel
     .deleteOne({ _id: id })
     .then(() => {
+      req.flash('success_msg', 'You are delete cube successfully');
       res.redirect('/');
     })
     .catch(next);
@@ -127,6 +130,7 @@ function postEditCube(req, res, next) {
       { ...updatedCube, difficultyLevel: +req.body.difficultyLevel + 1 }
     )
     .then(() => {
+      req.flash('success_msg', 'You are edit cube successfully');
       res.redirect('/');
     });
 }

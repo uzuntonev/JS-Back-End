@@ -34,7 +34,6 @@ function register(req, res) {
 function registerPost(req, res, next) {
   const { username, password, repeatPassword } = req.body;
   if (password !== repeatPassword) {
-    req.flash('error_msg', 'Passwords don`t match!');
     res.render('register', { errors: { message: 'Passwords don`t match!' } });
     return;
   }
@@ -46,8 +45,6 @@ function registerPost(req, res, next) {
     })
     .catch((err) => {
       if ((err.name === 'MongoError' && err.code === 11000)) {
-        console.log(err);
-        // req.flash('error_msg', 'User already taken!');
         res.render('register', {
           errors: { message: 'User already taken!' },
         });
