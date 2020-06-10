@@ -6,7 +6,7 @@ function login(req, res) {
   res.render('login');
 }
 
-function loginPost(req, res) {
+function loginPost(req, res, next) {
   const { username, password } = req.body;
   userModel
     .findOne({ username })
@@ -24,7 +24,7 @@ function loginPost(req, res) {
       const token = utils.createToke({ id: user._id });
       req.flash('success_msg', 'You are log in successfully');
       res.cookie(config.cookieName, token).redirect('/');
-    });
+    }).catch(next);
 }
 
 function register(req, res) {
@@ -54,12 +54,12 @@ function registerPost(req, res, next) {
     });
 }
 
-function logout(req, res) {
+function logout(req, res, next) {
   const token = req.cookies[config.cookieName];
   tokenBlackListModel.create({ token }).then(() => {
     req.flash('success_msg', 'You are logged out');
     res.clearCookie(config.cookieName).redirect('/');
-  });
+  }).catch(next);;
 }
 
 module.exports = {
