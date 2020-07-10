@@ -1,0 +1,32 @@
+<section>
+    <h1>Best Rated Plays</h1>
+    <div class="theaters-container">
+        {{#each plays}}
+        <div>
+            <div class="home-image">
+                <img src="{{imageUrl}}" alt="Card image cap" width="400">
+            </div>
+            <div class="info">
+                <h4>{{title}}</h4>
+            </div>
+        </div>
+        {{else}}
+        <h4>No plays yet...</h4>
+        {{/each}}
+    </div>
+</section>
+{{!-- 
+<section>
+    <h1>Best Rated Plays</h1>
+    <div class="theaters-container">
+        <div>
+            <div class="home-image">
+                <img src="https://media.timeout.com/images/103727744/380/285/image.jpg" alt="Card image cap"
+                    width="400">
+            </div>
+            <div class="info">
+                <h4>Who's Afraid of Virginia Woolf? by Edward Albee</h4>
+            </div>
+        </div>
+    </div>
+</section> --}}

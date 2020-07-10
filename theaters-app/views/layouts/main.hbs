@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Express Exam</title>
+
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+
+    <script defer async>
+        setTimeout(() => {
+            const el = document.querySelector('.notifications');
+            if (el) {
+                el.style.display = 'none'
+            }
+        }, 3000)
+
+    </script>
+</head>
+
+<body>
+    {{>header}}
+    <main>
+        {{{body}}}
+    </main>
+    {{> footer}}
+</body>
+</html>

@@ -1,0 +1,17 @@
+
+
+{{#if success_msg}}
+<section class="notifications success">
+    <p>{{success_msg}}</p>
+</section>
+{{/if}}
+{{#if error_msg}}
+<section class="notifications error">
+    <p>{{error_msg}}</p>
+</section>
+{{/if}}
+{{#if errors.message}}
+<section class="notifications error">
+    <p>{{errors.message}}</p>
+</section>
+{{/if}}
